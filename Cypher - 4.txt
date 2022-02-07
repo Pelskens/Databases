@@ -1,0 +1,10 @@
+MATCH (g1:Gene_change)<-[:CONTAINS]-(:Mutation{origin_country:"Portugal"})-[c:CONTAINS]->(g2:Gene_change) 
+WITH g1, g2, count(c) AS cnt
+
+MATCH (g1)<-[:CONTAINS]-(:Mutation{origin_country:"Portugal"})-[:CONTAINS]->(g2) 
+WITH g1, max(cnt) AS max 
+
+MATCH (g1)<-[:CONTAINS]-(:Mutation{origin_country:"Portugal"})-[c:CONTAINS]->(g2:Gene_change) 
+WITH g1, g2, count(c) AS cnt, max
+WHERE cnt = max 
+RETURN g1.gene AS gene1, g1.amino_acid_change AS amino_acid_change1, g1.nucleotide_change AS nucleotide_change1, g2.gene AS gene2, g2.amino_acid_change AS amino_acid_change2, g2.nucleotide_change AS nucleotide_change2

@@ -1,0 +1,2 @@
+MATCH (m:Mutation)-[s:SEEN_IN]->(l:Location{country:"Belgium"}) WHERE m.origin_country <> l.country WITH m, min(s.date) AS date_belgium
+MATCH (m)-[s:SEEN_IN]->(l:Location) RETURN distinct m.mutation_fingerprint, duration.inDays(min(s.date), date_belgium).days AS number_of_days
